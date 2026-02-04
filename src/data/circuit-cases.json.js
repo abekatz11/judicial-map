@@ -38,6 +38,7 @@ async function fetchCircuitCases() {
       recentUrl.searchParams.set("filed_after", "2024-01-01");
       recentUrl.searchParams.set("order_by", "dateFiled desc");
       recentUrl.searchParams.set("page_size", "20");
+      recentUrl.searchParams.set("q", "*");
       recentUrl.searchParams.set("format", "json");
 
       const recentResponse = await fetch(recentUrl, {
@@ -54,6 +55,7 @@ async function fetchCircuitCases() {
           docketNumber: opinion.docketNumber,
           status: opinion.status,
           citeCount: opinion.citeCount || 0,
+          snippet: (opinion.opinions && opinion.opinions[0]?.snippet) || "",
           url: `https://www.courtlistener.com${opinion.absolute_url}`
         }));
         recentCases.push(...recent);
@@ -68,6 +70,7 @@ async function fetchCircuitCases() {
       citedUrl.searchParams.set("court", circuit.id);
       citedUrl.searchParams.set("order_by", "citeCount desc");
       citedUrl.searchParams.set("page_size", "20");
+      citedUrl.searchParams.set("q", "*");
       citedUrl.searchParams.set("format", "json");
 
       const citedResponse = await fetch(citedUrl, {
@@ -84,6 +87,7 @@ async function fetchCircuitCases() {
           docketNumber: opinion.docketNumber,
           status: opinion.status,
           citeCount: opinion.citeCount || 0,
+          snippet: (opinion.opinions && opinion.opinions[0]?.snippet) || "",
           url: `https://www.courtlistener.com${opinion.absolute_url}`
         }));
         citedCases.push(...cited);

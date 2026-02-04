@@ -66,12 +66,13 @@ display(html`<div style="margin: 2rem 0;">
             ${c.caseName}
           </a>
         </h4>
-        <div style="font-size: 0.9rem; color: #666;">
+        <div style="font-size: 0.9rem; color: #666; margin-bottom: 0.5rem;">
           <strong>Docket:</strong> ${c.docketNumber} |
           <strong>Filed:</strong> ${new Date(c.dateFiled).toLocaleDateString()} |
           <strong>Status:</strong> ${c.status} |
           <strong>Citations:</strong> ${c.citeCount}
         </div>
+        ${c.snippet ? html`<p style="font-size: 0.85rem; color: #444; margin: 0.5rem 0 0 0; font-style: italic;">${c.snippet}</p>` : ''}
       </div>
     `)
   }
@@ -94,11 +95,12 @@ display(html`<div style="margin: 2rem 0;">
             ${c.citeCount} citations
           </span>
         </h4>
-        <div style="font-size: 0.9rem; color: #666;">
+        <div style="font-size: 0.9rem; color: #666; margin-bottom: 0.5rem;">
           <strong>Docket:</strong> ${c.docketNumber} |
           <strong>Filed:</strong> ${new Date(c.dateFiled).toLocaleDateString()} |
           <strong>Status:</strong> ${c.status}
         </div>
+        ${c.snippet ? html`<p style="font-size: 0.85rem; color: #444; margin: 0.5rem 0 0 0; font-style: italic;">${c.snippet}</p>` : ''}
       </div>
     `)
   }
