@@ -332,19 +332,69 @@ Co-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>
     - Free API with 5,000 queries/hour limit
     - Authenticated access via token
     - Data loader: `src/data/circuit-cases.json.js`
-13. ✅ Circuit court case data
-    - 20 most recent cases per circuit (260 total)
+13. ✅ Circuit court case data - DUAL LISTS
+    - **Most Recent Cases**: 20 per circuit (260 total) filed after 2024-01-01
+    - **Most Cited Cases**: 20 per circuit (260 total) sorted by citation count
     - Case names, docket numbers, filing dates
     - Links to full opinions on CourtListener
     - Publication status tracking
+    - Citation counts for ranking influential cases
 14. ✅ Case display on circuit pages
-    - Formatted case cards with styling
+    - Two sections: "Most Recent Cases" and "Most Cited Cases"
+    - Formatted case cards with distinct styling (blue for recent, purple for cited)
+    - Citation badges on most cited cases
     - Last updated timestamps
     - Clear indication of data freshness
+15. ✅ Case snippets (PARTIAL - needs improvement)
+    - Added snippet field extraction from CourtListener API
+    - Shows first ~500 characters of opinion text
+    - **LIMITATION**: Snippets often show court headers/metadata rather than substantive content
+    - **TO-DO**: Implement better snippet extraction (see Phase 4 below)
 
 ## Current Roadmap
 
-### 🔄 Phase 4: Data Freshness & Automation (PLANNED)
+### 🔧 Phase 4: Improve Case Snippets (NEXT UP)
+**Priority: High**
+**Status**: Paused - ready to test when resumed
+
+**Problem**: Current snippets show court headers and judge names instead of substantive case content.
+- Example unwanted: "SELYA, Circuit Judge. In 1983..."
+- Example wanted: "Defendant Ramona Flores appeals after her guilty plea conviction for being found illegally in the United States after having been previously deported"
+
+**Option 1 - Fetch Full Text and Extract (TO TEST)**
+- Make additional API call per case to fetch `plain_text` or `html_with_citations` field
+- Skip header/boilerplate text (judge names, court headers, procedural info)
+- Extract first few meaningful sentences that describe what the case is about
+- **Trade-offs**:
+  - ✅ Will work for all cases with full text
+  - ✅ Provides substantive, meaningful content
+  - ❌ 260 additional API calls per build (slow, ~4-5 minutes with rate limiting)
+  - ❌ May hit CourtListener rate limits (5,000/hour, so should be OK)
+  - ❌ Extraction logic needed to skip boilerplate
+
+**Option 2 - Fetch Syllabus/Headnotes (INVESTIGATED)**
+- Use CourtListener Cluster endpoint to get `syllabus` or `headnotes` fields
+- **Status**: Fields exist but are empty in most search results
+- **Conclusion**: Not viable for consistent results
+
+**Option 3 - Accept Current Limitations (FALLBACK)**
+- Keep case metadata without snippets
+- Users click through to read full opinions
+- ✅ Fast, reliable, no extra API calls
+- ❌ Less informative browsing experience
+
+**Implementation Plan for Option 1** (when ready to test):
+1. Test on small sample (e.g., 5 cases from one circuit)
+2. Verify quality of extracted snippets
+3. Measure API call overhead and build time impact
+4. If quality is good, implement for all cases
+5. Add extraction logic to skip common headers:
+   - "Circuit Judge"
+   - "United States Court of Appeals"
+   - Case docket headers
+   - Find first sentence describing the case facts/issue
+
+### 🔄 Phase 5: Data Freshness & Automation (PLANNED)
 **Priority: High**
 - [ ] Set up GitHub Actions for automated data updates
   - Schedule: Daily or weekly rebuilds
@@ -355,7 +405,7 @@ Co-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>
 - [ ] Store CourtListener API key in GitHub Secrets
 - [ ] Configure Cloudflare Pages integration
 
-### 📊 Phase 5: Enhanced Case Data (FUTURE)
+### 📊 Phase 6: Enhanced Case Data (FUTURE)
 **Priority: Medium**
 - [ ] Add originating district court information
   - Requires fetching docket details (additional API calls)
@@ -367,9 +417,9 @@ Co-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>
 - [ ] Add Nature of Suit (NOS) codes
   - Topic classification for cases
   - Consider supplementing with academic datasets
-  - Possible use of Dryad topic-modeled dataset
+  - ~~Dryad topic-modeled dataset~~ (covers 1970-2010, not useful for 2024+ cases)
 
-### 🎨 Phase 6: Enhanced Interactivity (FUTURE)
+### 🎨 Phase 7: Enhanced Interactivity (FUTURE)
 **Priority: Medium**
 - [ ] Add zoom/pan controls to main map
   - Implement `d3.zoom()` behavior
@@ -384,7 +434,7 @@ Co-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>
   - Filter by state or region
   - Quick navigation
 
-### 📚 Phase 7: Additional Data Sources (FUTURE)
+### 📚 Phase 8: Additional Data Sources (FUTURE)
 **Priority: Low**
 - [ ] Judge biographical data (Federal Judicial Center)
   - Who appointed them, confirmation dates
@@ -398,7 +448,7 @@ Co-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>
   - Track which circuits/districts feed to SCOTUS
   - Visualize appeal pathways
 
-### 🚀 Phase 8: Deployment (FUTURE)
+### 🚀 Phase 9: Deployment (FUTURE)
 **Priority: High (when ready to launch)**
 - [ ] Set up Cloudflare Pages project
 - [ ] Configure custom domain (courts.abekatz.com or abekatz.com/courts)
@@ -428,6 +478,13 @@ Co-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>
 - **Search results**: Basic case info, full details require docket API
 - **Missing fields**: Judge/panel names often empty in search results
 - **Originating district**: Requires additional docket API call per case
+- **Snippet extraction**:
+  - Snippet field is nested: `result.opinions[0].snippet` (not `result.snippet`)
+  - Requires search query parameter `q=*` or `q=term` to populate
+  - Limited to ~500 characters
+  - Often shows court headers instead of substantive content
+  - `syllabus`/`headnotes`/`summary` fields exist but are empty in most results
+  - Better snippets require fetching full opinion text via Opinion or Cluster endpoints
 
 ### Performance
 - **GeoJSON sizes**: Districts (28 MB), Circuits (10 MB)
