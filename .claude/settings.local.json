@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(test:*)",
+      "Bash(npm run build:*)",
+      "Bash(curl:*)",
+      "Bash(node -e:*)",
+      "Bash(gh pr list:*)",
+      "Bash(gh pr view:*)",
+      "Bash(node:*)",
+      "Bash(ls:*)",
+      "WebFetch(domain:www.courtlistener.com)",
+      "Bash(npm install:*)",
+      "WebSearch",
+      "Bash(git add:*)",
+      "Bash(git init:*)"
+    ]
+  }
+}

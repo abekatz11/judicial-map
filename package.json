@@ -1,0 +1,17 @@
+{
+  "name": "judicial-map",
+  "version": "0.0.1",
+  "type": "module",
+  "scripts": {
+    "dev": "observable preview",
+    "build": "observable build",
+    "deploy": "npm run build && npx wrangler pages deploy dist",
+    "clean": "rm -rf dist .observablehq/cache"
+  },
+  "devDependencies": {
+    "@observablehq/framework": "^1.13.3"
+  },
+  "dependencies": {
+    "dotenv": "^17.2.3"
+  }
+}

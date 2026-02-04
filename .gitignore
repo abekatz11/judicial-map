@@ -1,0 +1,10 @@
+node_modules
+dist
+.observablehq/cache
+.DS_Store
+source/
+*.log
+.env
+
+# Third-party repositories (for contributing PRs, not part of this project)
+judicial-boundaries/

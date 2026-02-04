@@ -1,0 +1,136 @@
+/* Custom styles for judicial map project */
+
+:root {
+  --font-heading: "Work Sans", sans-serif;
+  --font-body: Georgia, serif;
+}
+
+body {
+  font-family: var(--font-body);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  font-weight: 800;
+}
+
+.note {
+  background-color: #f0f0f0;
+  border-left: 4px solid #333;
+  padding: 1rem;
+  margin: 2rem 0;
+  border-radius: 4px;
+}
+
+.card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin: 1rem 0;
+  transition: box-shadow 0.2s;
+}
+
+.card:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.card h3 {
+  margin-top: 0;
+  font-size: 1.5rem;
+}
+
+.card a {
+  color: #0066cc;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.card a:hover {
+  text-decoration: underline;
+}
+
+/* Map container styles */
+.map-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 2rem auto;
+  background: #fafafa;
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+/* Observable input styling override */
+form {
+  margin: 1.5rem 0;
+  padding: 1rem;
+  background: white;
+  border-radius: 6px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+form label {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 0.95rem;
+  margin-right: 0.75rem;
+}
+
+/* Map SVG container */
+svg {
+  display: block;
+  margin: 0 auto;
+  background: white;
+  border-radius: 6px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+}
+
+/* District paths */
+path.district {
+  transition: all 0.15s ease-in-out;
+}
+
+path.district:hover {
+  filter: brightness(1.05);
+}
+
+/* Circuit paths */
+path.circuit {
+  transition: all 0.15s ease-in-out;
+}
+
+path.circuit:hover {
+  filter: brightness(0.95);
+}
+
+/* Tooltip */
+.map-tooltip {
+  position: absolute;
+  padding: 0.5rem 0.75rem;
+  background: rgba(0, 0, 0, 0.85);
+  color: white;
+  border-radius: 4px;
+  pointer-events: none;
+  font-size: 0.9rem;
+  font-family: var(--font-heading);
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  z-index: 1000;
+  white-space: nowrap;
+}
+
+/* Info box */
+.map-info {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  background: white;
+  border-left: 4px solid #4a90e2;
+  border-radius: 4px;
+  font-size: 0.95rem;
+}
+
+.map-info strong {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  color: #2874a6;
+}
