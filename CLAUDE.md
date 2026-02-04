@@ -407,10 +407,27 @@ Co-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>
 
 ### 📊 Phase 6: Enhanced Case Data (FUTURE)
 **Priority: Medium**
-- [ ] Add originating district court information
-  - Requires fetching docket details (additional API calls)
-  - Show which district each appeal came from
-  - ~260 extra API calls per build (within rate limits)
+
+**A. Originating District Court Information**
+- [ ] Add originating district court for circuit court appeals
+  - Show which district court the appeal originated from
+  - Creates link between circuit cases and district courts
+  - Enables "flow" visualization of cases through court system
+  - **Implementation**: Fetch docket details via CourtListener API
+  - **API calls**: ~520 additional calls (260 recent + 260 cited cases)
+  - **Data available**: CourtListener docket endpoint has `court` field for originating court
+
+**B. SCOTUS Appeal Tracking**
+- [ ] Indicate which circuit cases were appealed to Supreme Court
+  - Show if case was reviewed by SCOTUS
+  - Show SCOTUS outcome (granted, denied, decided)
+  - Creates complete judicial pathway visualization
+  - **Data sources**:
+    - CourtListener: `related_clusters` or citation data
+    - Supreme Court Database (SCDB): Cross-reference by case name/year
+  - **Implementation**: May require case name matching or citation tracking
+
+**C. Additional Metadata**
 - [ ] Add judge/panel information to cases
   - Currently missing from search results
   - May need full opinion/docket details
