@@ -265,6 +265,40 @@ npm run clean
 
 ## Session Rules
 
+### Git Workflow (ALWAYS FOLLOW)
+**Commit and push work regularly without being prompted:**
+1. **After completing a logical unit of work** (feature, fix, refactor), create a commit
+2. **After 3-5 commits**, push to GitHub automatically
+3. **At the end of each session** or when user says "done" or similar, commit and push any uncommitted work
+4. **Use descriptive commit messages** following conventional commit format when appropriate
+5. **Include Co-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>** in all commits
+
+**When to commit:**
+- After adding a new feature
+- After fixing a bug
+- After completing a refactor
+- After updating documentation
+- Before risky operations (to create a restore point)
+
+**Commit message format:**
+```
+Brief description in imperative mood
+
+Detailed explanation if needed:
+- What changed
+- Why it changed
+- Any important notes
+
+Co-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>
+```
+
+**Never commit:**
+- `.env` files (should be gitignored)
+- Large binary files without discussion
+- `node_modules/` or build artifacts
+- Personal credentials or secrets
+
+### General Rules
 - You are always allowed to run: `git`, `gh`, `ls`, `cat`, `head`, `tail`, `npm` commands
 - **Do NOT attempt to download datasets automatically** - user will handle data retrieval separately
 - Focus on framework setup, data loader scaffolding, and D3 visualization code
