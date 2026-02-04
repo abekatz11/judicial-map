@@ -13,7 +13,13 @@
       "Bash(npm install:*)",
       "WebSearch",
       "Bash(git add:*)",
-      "Bash(git init:*)"
+      "Bash(git init:*)",
+      "Bash(git commit:*)",
+      "Bash(gh repo view:*)",
+      "Bash(gh repo create:*)",
+      "Bash(git push:*)",
+      "Bash(gh api:*)",
+      "Bash(git config:*)"
     ]
   }
 }
