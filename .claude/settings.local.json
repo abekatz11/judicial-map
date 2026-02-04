@@ -19,7 +19,8 @@
       "Bash(gh repo create:*)",
       "Bash(git push:*)",
       "Bash(gh api:*)",
-      "Bash(git config:*)"
+      "Bash(git config:*)",
+      "Bash(npm run clean:*)"
     ]
   }
 }
